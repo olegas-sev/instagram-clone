@@ -10,7 +10,7 @@ import {
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid"
 import "emoji-mart/css/emoji-mart.css"
 import { Picker } from "emoji-mart"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSession } from "next-auth/react"
 import {
     addDoc,
@@ -33,6 +33,7 @@ function Post({ id, username, userImg, img, caption }) {
     const [likes, setLikes] = useState([])
     const [emojiOpened, setEmojiOpened] = useState(false)
     const [hasLiked, setHasLiked] = useState(false)
+    const commentRef = useRef(null)
 
     // First init set state on comments, updates on database update
     useEffect(
@@ -120,7 +121,7 @@ function Post({ id, username, userImg, img, caption }) {
                         ) : (
                             <HeartIcon onClick={likePost} className="btn" />
                         )}
-                        <ChatIcon className="btn" />
+                        <ChatIcon onClick={() => {commentRef.current.focus()}} className="btn" />
                         <PaperAirplaneIcon className="btn" />
                     </div>
                     <BookmarkIcon className="btn" />
@@ -199,6 +200,7 @@ function Post({ id, username, userImg, img, caption }) {
                     <input
                         type="text"
                         value={comment}
+                        ref={commentRef}
                         onChange={(e) => setComment(e.target.value)}
                         className="border-none flex-1 focus:ring-0"
                         placeholder="Add a comment..."
