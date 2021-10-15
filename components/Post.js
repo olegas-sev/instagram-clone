@@ -107,7 +107,6 @@ function Post({ id, username, userImg, img, caption }) {
                 className="object-cover w-full"
                 alt={"Picture of " + username}
             />
-
             {/* Buttons only if logged in */}
             {session && (
                 <div className="flex justify-between px-4 pt-4">
@@ -121,27 +120,29 @@ function Post({ id, username, userImg, img, caption }) {
                         ) : (
                             <HeartIcon onClick={likePost} className="btn" />
                         )}
-                        <ChatIcon onClick={() => {commentRef.current.focus()}} className="btn" />
+                        <ChatIcon
+                            onClick={() => {
+                                commentRef.current.focus()
+                            }}
+                            className="btn"
+                        />
                         <PaperAirplaneIcon className="btn" />
                     </div>
                     <BookmarkIcon className="btn" />
                 </div>
             )}
+            {/* Caption */}
+            <p className="p-5 pt-3 truncate">
+                {likes.length > 0 && (
+                    <p className="font-semibold mb-1">{likes.length} likes</p>
+                )}
 
-            {/* Caption if it exists? */}
-            {caption && (
-                <p className="p-5 pt-3 truncate">
-                    {likes.length > 0 && (
-                        <p className="font-semibold mb-1">{likes.length} likes</p>
-                    )}
-
-                    <span className="font-semibold mr-1">{username}</span>
-                    {caption}
-                </p>
-            )}
+                <span className="font-semibold mr-1">{username}</span>
+                {caption}
+            </p>
             {/* Comments */}
             {comments.length > 0 && (
-                <div className="ml-10 h-20 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
+                <div className="ml-10 max-h-20 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
                     {comments.map((comment) => (
                         <div
                             className="flex items-center space-x-2 mb-3"
@@ -172,7 +173,6 @@ function Post({ id, username, userImg, img, caption }) {
                     ))}
                 </div>
             )}
-
             {/* Input box only if logged in */}
             {session && (
                 <form className="flex items-center p-4">
