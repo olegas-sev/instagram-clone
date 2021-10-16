@@ -35,6 +35,7 @@ function Post({ id, username, userImg, img, caption }) {
     const [hasLiked, setHasLiked] = useState(false)
     const commentRef = useRef(null)
 
+
     // First init set state on comments, updates on database update
     useEffect(
         () =>
@@ -103,9 +104,10 @@ function Post({ id, username, userImg, img, caption }) {
             </div>
             {/* Img */}
             <img
+                onDoubleClick={likePost}
                 src={img}
                 className="object-cover w-full"
-                alt={"Picture of " + username}
+                alt={username + "'s posted picture"}
             />
             {/* Buttons only if logged in */}
             {session && (
